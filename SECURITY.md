@@ -1,22 +1,23 @@
-# Security Policy
+# Security and camera-data guidance
 
-## Supported Versions
+This is a local webcam game using third-party native image-processing dependencies. It is not security-audited. No supported-version programme, response deadline or guaranteed remediation schedule is established here.
 
-This project is currently supported in its latest version. Since it runs entirely on your local machine using standard libraries, security updates will be rolled out directly to the main repository branch.
+## Camera and recordings
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
-| < 1.0.0 | :x:                |
+The inspected application contains no explicit network upload code. This is a source observation, not an independently verified guarantee about the complete dependency/runtime environment.
 
-## Reporting a Vulnerability
+Optional MP4 recording includes the rendered camera view and can capture people and private surroundings. Obtain permission before recording or sharing. The current .gitignore does not exclude recordings. Inspect staged files; adding an ignore rule later does not remove previously tracked footage or history.
 
-We take the security and privacy of this project seriously. If you find a security vulnerability (such as potential buffer overflows in native image processing integrations, or arbitrary input vulnerabilities), please do not report it publicly in GitHub Issues. 
+## Local state
 
-Instead, please report security vulnerabilities by creating a private issue or contacting the author, **Srun Sochettra**, directly.
+Records/calibration and ghost paths are JSON files in the user's home directory. Ghost files contain coordinates, timestamps and pinch states rather than camera frames. The application does not encrypt these files.
 
-Once we receive a report:
-1. We will acknowledge receipt of your vulnerability report within 48 hours.
-2. We will investigate the issue and coordinate a resolution or fix.
-3. We will release an update with the security fix.
-4. We will credit you for finding the vulnerability if you wish.
+Loaders perform limited structural validation. Do not import untrusted state files or assume malformed values are harmless. Writes suppress filesystem errors and are not atomic. A success overlay is not verified durable storage.
+
+MediaPipe is pinned, but OpenCV and NumPy are not. Review installed dependencies separately; syntax parsing does not assess native-library security.
+
+## Reporting
+
+For ordinary defects, provide the affected module, environment and minimal reproduction. For sensitive concerns, use a verified private maintainer channel if available, or request a private contact without posting details. No dedicated mailbox or enabled private-reporting feature is confirmed by the supplied repository.
+
+Do not publish private footage, credentials or identifying local paths. Address original exposures rather than relying only on deleting the current file. This documentation does not implement security fixes.

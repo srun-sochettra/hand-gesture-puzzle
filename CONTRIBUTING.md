@@ -1,67 +1,19 @@
-# Contributing to Hand Gesture Puzzle Game
+# Contributing
 
-First off, thank you for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
+Keep changes focused on the gesture puzzle and its existing modules. Read the [README](README.md), [implementation notes](docs/implementation-notes.md) and [code of conduct](CODE_OF_CONDUCT.md).
 
-All types of contributions are welcome, from reporting bugs, suggesting new features, improving documentation, to writing code.
+Use the README setup and existing MediaPipe pin. Put shared tuning values in config.py and preserve the separation between tracking, game state, rendering and persistence. Avoid new frameworks or dependencies without a concrete need.
 
----
+## Verification
 
-## Code of Conduct
+No automated test suite is supplied. Add a focused regression check for changed non-trivial logic where practical. Distinguish syntax checks, mocked logic tests and real webcam sessions.
 
-This project and everyone participating in it is governed by the [Code of Conduct](file:///d:/Users/ROG/Documents/School_Projects/Clones/hand-gesture-puzzle-game/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to the project maintainers.
+Relevant scenarios include camera fallback/read failures; calibration success, insufficient samples and skipping; handedness and temporary hand loss; pinch hysteresis and snapping; retry/next-level timing; two-hand shape ownership; record/ghost interactions; malformed or unwritable JSON; and MP4 output on the target machine.
 
----
+Only report checks actually performed. State platform, Python/package versions and relevant settings for camera/tracking issues. Performance claims require a measurement method and real results, not just the configured FPS target.
 
-## How Can I Contribute?
+Use permitted footage and redact private surroundings. Review generated files before committing: recordings are not currently ignored.
 
-### Reporting Bugs
+## Pull requests
 
-If you find a bug (such as unstable hand tracking on certain platforms, incorrect shape snapping, or rendering issues), please create a new issue and include:
-* Your Operating System (Windows, macOS, Linux).
-* Your Python and OpenCV/MediaPipe versions.
-* Clear steps to reproduce the issue.
-* Any error logs or warning messages from the console.
-
-### Suggesting Features
-
-If you have ideas to make the gameplay more fun or interactive:
-1. Check the existing feature requests and planned features listed in the `README.md` (e.g. sound effects, score system, timer mode, obstacles).
-2. Open a new issue describing your proposed feature, why it would be valuable, and how it could be designed/implemented.
-
-### Code Contributions
-
-If you'd like to fix a bug or implement a feature:
-
-1. **Fork and Clone**: Fork the repository and clone it to your local machine.
-2. **Setup Dev Environment**:
-   * Use Python 3.11 (recommended).
-   * Set up a virtual environment and install the dependencies:
-     ```powershell
-     python -m venv .venv
-     # On Windows (PowerShell):
-     .\.venv\Scripts\Activate.ps1
-     # On macOS/Linux:
-     source .venv/bin/activate
-     
-     pip install -r requirements.txt
-     ```
-3. **Keep Code Modular**:
-   * Do not put everything in one file. Follow the established modular structure:
-     * [config.py](file:///d:/Users/ROG/Documents/School_Projects/Clones/hand-gesture-puzzle-game/config.py): Configuration, levels, speeds, and gesture thresholds.
-     * [vision.py](file:///d:/Users/ROG/Documents/School_Projects/Clones/hand-gesture-puzzle-game/vision.py): Hand tracking and pinch detection logic.
-     * [game.py](file:///d:/Users/ROG/Documents/School_Projects/Clones/hand-gesture-puzzle-game/game.py): Game loop states, level progression, shape movement, and targets.
-     * [renderer.py](file:///d:/Users/ROG/Documents/School_Projects/Clones/hand-gesture-puzzle-game/renderer.py): Screen rendering, UI design, color palettes, and overlay drawing.
-     * [main.py](file:///d:/Users/ROG/Documents/School_Projects/Clones/hand-gesture-puzzle-game/main.py): Entry point, webcam capturing, and frame processing.
-4. **Test Your Changes**: Run `python main.py` and ensure the game runs smoothly, tracking is stable, and no new warnings are generated.
-5. **Code Style**: Keep code readable and follow standard Python guidelines (PEP 8).
-6. **Submit a Pull Request (PR)**:
-   * Describe your changes in detail.
-   * Explain what problem it solves and refer to any open issues.
-
----
-
-## Coding Guidelines
-
-* **Webcam compatibility**: Make sure your modifications do not break basic webcam fallback setups.
-* **Tuning values**: If a feature requires constants (like speed, color, window dimensions), add them to `config.py` rather than hardcoding them elsewhere.
-* **Performance**: Since the game runs in real-time, avoid adding expensive operations inside the main loops or rendering loops that could lower the game's FPS. Keep track of the FPS indicator on screen to verify performance.
+Describe the problem, focused change, verification and remaining gaps. Keep unrelated dependency upgrades and redesigns separate. Follow [SECURITY.md](SECURITY.md) for sensitive reports.
